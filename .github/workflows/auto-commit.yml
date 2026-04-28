@@ -2,10 +2,16 @@ name: Auto Commit Daily
 
 on:
   schedule:
-    - cron: "0 4 * * *"   # 9:30 AM IST
-    - cron: "0 8 * * *"   # 1:30 PM IST
-    - cron: "0 12 * * *"  # 5:30 PM IST
+    - cron: "0 4 * * *"
+    - cron: "0 8 * * *"
+    - cron: "0 12 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   commit:
@@ -21,8 +27,8 @@ jobs:
 
       - name: Commit & Push
         run: |
-          git config user.name "gauravbakliwaldeveloper-alt"
-          git config user.email "gauravbakliwaldeveloper@gmail.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions@github.com"
           git add .
           git commit -m "Auto commit $(date)" || echo "No changes"
           git push
