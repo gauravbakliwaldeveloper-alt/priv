@@ -1,29 +1,27 @@
-name: Auto Commit Daily
+name: Auto Commit Fast
 
 on:
   schedule:
-    - cron: "0 4 * * *"
-    - cron: "0 8 * * *"
-    - cron: "0 12 * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+concurrency:
+  group: auto-commit
+  cancel-in-progress: true
 
 jobs:
   commit:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Make changes
         run: |
-          echo "Update at $(date)" >> data.txt
+          echo "Commit at $(date)" > data.txt
 
       - name: Commit & Push
         run: |
