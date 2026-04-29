@@ -8,10 +8,6 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: auto-commit
-  cancel-in-progress: true
-
 jobs:
   commit:
     runs-on: ubuntu-latest
@@ -21,7 +17,7 @@ jobs:
 
       - name: Make changes
         run: |
-          echo "Commit at $(date)" > data.txt
+          echo "Commit at $(date)" >> data.txt
 
       - name: Commit & Push
         run: |
